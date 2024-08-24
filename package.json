@@ -15,5 +15,8 @@
   },
   "scripts": {
     "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.18.0"
   }
 }
