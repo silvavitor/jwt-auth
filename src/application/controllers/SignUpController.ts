@@ -1,4 +1,6 @@
 import { z, ZodError } from "zod";
+import { AccountAlreadyExists } from "../errors/AccountAlreadyExists";
+import { InvalidCredentials } from "../errors/InvalidCredentials";
 import { IController, IRequest, IResponse } from "../interfaces/Controller";
 import { SignUpUseCase } from "../useCases/SignUp.useCase";
 
@@ -29,6 +31,24 @@ export class SignUpController implements IController {
         return {
           statusCode: 400,
           body: error.issues,
+        };
+      }
+
+      if (error instanceof AccountAlreadyExists) {
+        return {
+          statusCode: 409,
+          body: {
+            error: "AccountAlreadyExists",
+          },
+        };
+      }
+
+      if (error instanceof InvalidCredentials) {
+        return {
+          statusCode: 401,
+          body: {
+            error: "InvalidCredentials",
+          },
         };
       }
       throw error;
