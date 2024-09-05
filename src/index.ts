@@ -1,1 +1,1 @@
-const a = "a";
+import "./server";
