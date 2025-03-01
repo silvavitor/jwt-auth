@@ -1,6 +1,7 @@
 import { z, ZodError } from "zod";
 import { InvalidCredentials } from "../errors/InvalidCredentials";
-import { IController, IRequest, IResponse } from "../interfaces/Controller";
+import { IController, IResponse } from "../interfaces/Controller";
+import { IRequest } from "../interfaces/Request";
 import { SignInUseCase } from "../useCases/SignIn.useCase";
 
 const schema = z.object({

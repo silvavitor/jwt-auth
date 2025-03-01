@@ -1,6 +1,4 @@
-export interface IMiddlewareRequest {
-  headers: Record<string, string>;
-}
+import { IRequest } from "./Request";
 
 export interface IMiddlewareResponse {
   statusCode: number;
@@ -12,7 +10,5 @@ export interface IMiddlewareData {
 }
 
 export interface IMiddleware {
-  handle(
-    request: IMiddlewareRequest
-  ): Promise<IMiddlewareResponse | IMiddlewareData>;
+  handle(request: IRequest): Promise<IMiddlewareResponse | IMiddlewareData>;
 }

@@ -1,7 +1,4 @@
-export interface IRequest {
-  body: Record<string, any>;
-  accountId?: string;
-}
+import { IRequest } from "./Request";
 
 export interface IResponse {
   statusCode: number;
