@@ -20,9 +20,18 @@ model Account {
 }
 
 model Role {
-  id       String    @id @default(uuid()) @db.Uuid
-  name     String
+  id   String @id @default(uuid()) @db.Uuid
+  name String
+
   accounts Account[]
 
   @@map("roles")
+}
+
+model Permission {
+  id   String @id @default(uuid()) @db.Uuid
+  name String
+  code String @unique
+
+  @@map("permissions")
 }
