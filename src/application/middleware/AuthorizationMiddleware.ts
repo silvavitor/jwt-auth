@@ -4,9 +4,13 @@ import {
   IMiddlewareResponse,
 } from "../interfaces/Middleware";
 import { IRequest } from "../interfaces/Request";
+import { GetRolePermissionsUseCase } from "../useCases/GetRolePermissionsUseCase";
 
 export class AuthorizationMiddleware implements IMiddleware {
-  constructor(private readonly allowedRoles: string[]) {}
+  constructor(
+    private readonly requiredPermissions: string[],
+    private readonly getRolePermissionsUseCase: GetRolePermissionsUseCase
+  ) {}
 
   async handle({
     account,
@@ -20,7 +24,15 @@ export class AuthorizationMiddleware implements IMiddleware {
       };
     }
 
-    if (!this.allowedRoles.includes(account.role)) {
+    const { permissionsCodes } = await this.getRolePermissionsUseCase.execute({
+      roleId: account.role,
+    });
+
+    const isAllowed = this.requiredPermissions.some((code) =>
+      permissionsCodes.includes(code)
+    );
+
+    if (!isAllowed) {
       return {
         statusCode: 403,
         body: {
