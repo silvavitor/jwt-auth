@@ -5,12 +5,13 @@ type Input = {
   name: string;
   email: string;
   password: string;
+  roleId: string;
 };
 
 type Output = void;
 export class SignUpUseCase {
   constructor(private readonly salt: number) {}
-  async execute({ email, name, password }: Input): Promise<Output> {
+  async execute({ email, name, password, roleId }: Input): Promise<Output> {
     const accountAlreadyExists = await prismaClient.account.findUnique({
       where: {
         email,
@@ -28,7 +29,7 @@ export class SignUpUseCase {
         email,
         name,
         password: hashedPassword,
-        role: "USER",
+        roleId,
       },
     });
   }
